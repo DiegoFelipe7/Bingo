@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./Components/auth/Login";
+import Menu from "./Components/Layout/Menu";
+import NuevaCuenta from "./Components/auth/NuevaCuenta";
+import UsuariosState from "./contex/Usuarios/UsuariosState";
+import BingoState from "./contex/Bingo/BingoState";
+import Principal from "./Components/Layout/Principal";
+import Iniciar from "./Components/Layout/Bingo/Iniciar";
+import Usuario from "./Components/Layout/Bingo/Usuario";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <UsuariosState>
+        <BingoState>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/">
+                <Route index element={<Login />} />
+                <Route path="nuevo-registro" element={<NuevaCuenta />} />
+              </Route>
+              <Route path="/menu" element={<Menu />}>
+                <Route index element={<Principal />} />
+                <Route path="iniciar" element={<Iniciar />} />
+                <Route path="usuario" element={<Usuario />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </BingoState>
+      </UsuariosState>
+    </>
   );
 }
 
