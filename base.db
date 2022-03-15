@@ -1,0 +1,122 @@
+
+CREATE DATABASE IF NOT EXISTS `bd_bingo` 
+USE `bd_bingo`;
+
+-- Volcando estructura para tabla bd_bingo.balota
+CREATE TABLE IF NOT EXISTS `balota` (
+  `bal_id` int(11) NOT NULL AUTO_INCREMENT,
+  `bal_letra` varchar(1) COLLATE utf8_spanish_ci NOT NULL,
+  `bal_numero` int(11) NOT NULL,
+  PRIMARY KEY (`bal_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- Volcando datos para la tabla bd_bingo.balota: ~25 rows (aproximadamente)
+/*!40000 ALTER TABLE `balota` DISABLE KEYS */;
+INSERT INTO `balota` (`bal_id`, `bal_letra`, `bal_numero`) VALUES
+	(1, 'B', 12),
+	(2, 'I', 10),
+	(3, 'N', 1),
+	(4, 'G', 9),
+	(5, 'O', 4),
+	(6, 'B', 2),
+	(7, 'I', 4),
+	(8, 'N', 12),
+	(9, 'G', 15),
+	(10, 'O', 3),
+	(11, 'B', 5),
+	(12, 'I', 6),
+	(13, 'D', 0),
+	(14, 'G', 3),
+	(15, 'O', 12),
+	(16, 'B', 5),
+	(17, 'I', 8),
+	(18, 'N', 20),
+	(19, 'G', 21),
+	(20, 'O', 12),
+	(21, 'B', 23),
+	(22, 'I', 17),
+	(23, 'N', 13),
+	(24, 'G', 14),
+	(25, 'O', 7);
+/*!40000 ALTER TABLE `balota` ENABLE KEYS */;
+
+-- Volcando estructura para tabla bd_bingo.ruleta
+CREATE TABLE IF NOT EXISTS `ruleta` (
+  `id_ruleta` int(11) NOT NULL AUTO_INCREMENT,
+  `tarjeton` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `balota` int(11) NOT NULL,
+  `balota_marcada` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_ruleta`),
+  KEY `FK_ruleta_balota` (`balota`),
+  KEY `FK_ruleta_tarjeton` (`tarjeton`) USING BTREE,
+  CONSTRAINT `FK_ruleta_balota` FOREIGN KEY (`balota`) REFERENCES `balota` (`bal_id`),
+  CONSTRAINT `FK_ruleta_tarjeton` FOREIGN KEY (`tarjeton`) REFERENCES `tarjeton` (`tar_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- Volcando datos para la tabla bd_bingo.ruleta: ~25 rows (aproximadamente)
+/*!40000 ALTER TABLE `ruleta` DISABLE KEYS */;
+INSERT INTO `ruleta` (`id_ruleta`, `tarjeton`, `balota`, `balota_marcada`) VALUES
+	(1, '622a4fce7e5bb4090b6281b8', 1, 0),
+	(2, '622a4fce7e5bb4090b6281b8', 2, 0),
+	(4, '622a4fce7e5bb4090b6281b8', 3, 0),
+	(8, '622a4fce7e5bb4090b6281b8', 4, 0),
+	(10, '622a4fce7e5bb4090b6281b8', 5, 0),
+	(11, '622a4fce7e5bb4090b6281b8', 6, 0),
+	(12, '622a4fce7e5bb4090b6281b8', 7, 0),
+	(13, '622a4fce7e5bb4090b6281b8', 8, 0),
+	(14, '622a4fce7e5bb4090b6281b8', 9, 0),
+	(15, '622a4fce7e5bb4090b6281b8', 10, 0),
+	(16, '622a4fce7e5bb4090b6281b8', 11, 0),
+	(17, '622a4fce7e5bb4090b6281b8', 12, 0),
+	(18, '622a4fce7e5bb4090b6281b8', 13, 0),
+	(19, '622a4fce7e5bb4090b6281b8', 14, 0),
+	(20, '622a4fce7e5bb4090b6281b8', 15, 0),
+	(21, '622a4fce7e5bb4090b6281b8', 16, 0),
+	(22, '622a4fce7e5bb4090b6281b8', 17, 0),
+	(23, '622a4fce7e5bb4090b6281b8', 18, 0),
+	(24, '622a4fce7e5bb4090b6281b8', 19, 0),
+	(26, '622a4fce7e5bb4090b6281b8', 20, 0),
+	(27, '622a4fce7e5bb4090b6281b8', 21, 0),
+	(28, '622a4fce7e5bb4090b6281b8', 22, 0),
+	(29, '622a4fce7e5bb4090b6281b8', 23, 0),
+	(30, '622a4fce7e5bb4090b6281b8', 24, 0),
+	(31, '622a4fce7e5bb4090b6281b8', 25, 0);
+/*!40000 ALTER TABLE `ruleta` ENABLE KEYS */;
+
+-- Volcando estructura para tabla bd_bingo.tarjeton
+CREATE TABLE IF NOT EXISTS `tarjeton` (
+  `tar_id` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`tar_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- Volcando datos para la tabla bd_bingo.tarjeton: ~3 rows (aproximadamente)
+/*!40000 ALTER TABLE `tarjeton` DISABLE KEYS */;
+INSERT INTO `tarjeton` (`tar_id`) VALUES
+	('622a4fce7e5bb4090b6281b8'),
+	('622f577fdb03674836c6e547'),
+	('er13fkj');
+/*!40000 ALTER TABLE `tarjeton` ENABLE KEYS */;
+
+-- Volcando estructura para tabla bd_bingo.usuario
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `usu_id` int(11) NOT NULL AUTO_INCREMENT,
+  `usu_nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `usu_apellido` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `usu_correo` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `id_tarjeton` varchar(50) COLLATE utf8_spanish_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`usu_id`),
+  KEY `FK_usuario_tarjeton` (`id_tarjeton`),
+  CONSTRAINT `FK_usuario_tarjeton` FOREIGN KEY (`id_tarjeton`) REFERENCES `tarjeton` (`tar_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- Volcando datos para la tabla bd_bingo.usuario: ~2 rows (aproximadamente)
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` (`usu_id`, `usu_nombre`, `usu_apellido`, `usu_correo`, `id_tarjeton`) VALUES
+	(10, 'Diego Felipe', 'Munoz Mosquera', 'diego@gmail.com', '622a4fce7e5bb4090b6281b8'),
+	(11, 'Carlos', 'Perez', 'car@gmail.com', '622f577fdb03674836c6e547');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
